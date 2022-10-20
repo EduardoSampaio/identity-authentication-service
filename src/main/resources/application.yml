@@ -1,0 +1,4 @@
+jwt:
+   secret: ${JWT_SECRET}
+   expiration-token: 3600000
+   tokenRefreshTimeExpiration: 86400000
