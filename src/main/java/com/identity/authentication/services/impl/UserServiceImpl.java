@@ -10,6 +10,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -34,10 +35,10 @@ public class UserServiceImpl implements UserService {
                 .username(userDetails.getUsername())
                 .token(token)
                 .refeshToken(UUID.randomUUID().toString())
-                .id(UUID.randomUUID().toString())
-                .roles(userDetails.getAuthorities().stream()
-                        .map(role -> role.getAuthority())
+                .id(userDetails.getId())
+                .roles(userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority)
                         .collect(Collectors.toList()))
+
                 .build();
     }
 

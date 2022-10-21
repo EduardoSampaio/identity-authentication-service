@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.UUID;
 
 @Entity
-@Table(name = "users_claims")
+@Table(name = "TBL_USERS_CLAIMS")
 @IdClass(UserClaimId.class)
 @Getter
 @Setter
@@ -18,17 +18,19 @@ import java.util.UUID;
 public class UserClaim implements Serializable {
 
     @Id
+    @Column(name = "SQ_USER_ID")
     private UUID userId;
     @Id
+    @Column(name = "SQ_CLAIM_ID")
     private Long claimId;
 
     @ManyToOne
     @MapsId("userId")
-    @JoinColumn(name = "fk_users_claims")
+    @JoinColumn(name = "FK_USERS_CLAIMS")
     private User user;
 
     @ManyToOne
     @MapsId("claimId")
-    @JoinColumn(name = "fk_claims_users")
+    @JoinColumn(name = "FK_CLAIMS_USERS")
     private Claim claim;
 }

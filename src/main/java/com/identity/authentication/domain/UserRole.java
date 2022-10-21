@@ -7,8 +7,8 @@ import java.io.Serializable;
 import java.util.UUID;
 
 @Entity
-@Table(name = "users_roles")
-@IdClass(UserRole.class)
+@Table(name = "TBL_USERS_ROLES")
+@IdClass(UserRoleId.class)
 @Getter
 @Setter
 @Builder
@@ -18,15 +18,17 @@ import java.util.UUID;
 public class UserRole implements Serializable {
 
     @Id
+    @Column(name = "SQ_USER_ID")
     private UUID userId;
     @Id
+    @Column(name = "SQ_ROLE_ID")
     private Long roleId;
 
-    @ManyToOne
-    @JoinColumn(name = "fk_users_roles")
+    @MapsId("userId")
+    @JoinColumn(name = "FK_USER_ROLES", referencedColumnName= "FK_USER_ROLES")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "fk_roles_users")
+    @MapsId("roleId")
+    @JoinColumn(name = "FK_ROLE_USERS", referencedColumnName = "FK_ROLE_USERS")
     private Role role;
 }
