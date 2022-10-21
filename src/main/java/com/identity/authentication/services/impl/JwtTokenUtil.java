@@ -1,4 +1,4 @@
-package com.identity.authentication.service;
+package com.identity.authentication.services.impl;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

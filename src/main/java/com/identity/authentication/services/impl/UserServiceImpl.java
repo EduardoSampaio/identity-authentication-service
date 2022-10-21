@@ -1,39 +1,36 @@
-package com.identity.authentication.controller;
+package com.identity.authentication.services.impl;
 
 import com.identity.authentication.dto.JwtRequest;
 import com.identity.authentication.dto.JwtResponse;
 import com.identity.authentication.dto.UserDetailsImpl;
-import com.identity.authentication.service.JwtTokenUtil;
+import com.identity.authentication.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@RestController
-@CrossOrigin
-public class JwtAuthenticationController {
+@Service
+public class UserServiceImpl implements UserService {
+
     @Autowired
     private AuthenticationManager authenticationManager;
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
-    @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
-
-        UserDetailsImpl userDetails = authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+    @Override
+    public JwtResponse authenticate(JwtRequest authenticationRequest) throws Exception {
+        UserDetailsImpl userDetails = authenticateManager(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 
         final String token = jwtTokenUtil.generateToken(userDetails);
 
-        JwtResponse jwtResponse = JwtResponse.builder()
+        return JwtResponse.builder()
                 .username(userDetails.getUsername())
                 .token(token)
                 .refeshToken(UUID.randomUUID().toString())
@@ -42,11 +39,9 @@ public class JwtAuthenticationController {
                         .map(role -> role.getAuthority())
                         .collect(Collectors.toList()))
                 .build();
-
-        return ResponseEntity.ok(jwtResponse);
     }
 
-    private UserDetailsImpl authenticate(String username, String password) throws Exception {
+    private UserDetailsImpl authenticateManager(String username, String password) throws Exception {
         try {
             Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
             return (UserDetailsImpl) authenticate.getDetails();

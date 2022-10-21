@@ -1,6 +1,6 @@
-package com.identity.authentication.config;
+package com.identity.authentication.providers;
 
-import com.identity.authentication.service.JwtUserDetailsService;
+import com.identity.authentication.services.impl.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

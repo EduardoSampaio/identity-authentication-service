@@ -1,9 +1,7 @@
-package com.identity.authentication.service;
+package com.identity.authentication.services.impl;
 
 import com.identity.authentication.dto.UserDetailsImpl;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
