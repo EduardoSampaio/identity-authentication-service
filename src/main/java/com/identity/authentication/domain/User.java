@@ -40,4 +40,7 @@ public class User implements Serializable {
     private LocalDateTime createdAt;
     @Column(name = "DT_UPDATE_AT", columnDefinition = "TIMESTAMP")
     private LocalDateTime updateAt;
+
+    @OneToMany(mappedBy="user",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<UserRole> userRoles;
 }

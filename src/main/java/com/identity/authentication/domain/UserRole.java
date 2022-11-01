@@ -24,11 +24,11 @@ public class UserRole implements Serializable {
     @Column(name = "SQ_ROLE_ID")
     private Long roleId;
 
-    @MapsId("userId")
-    @JoinColumn(name = "FK_USER_ROLES", referencedColumnName= "FK_USER_ROLES")
+    @ManyToOne
+    @JoinColumn(name = "SQ_USER_ID", insertable = false, updatable = false)
     private User user;
 
-    @MapsId("roleId")
-    @JoinColumn(name = "FK_ROLE_USERS", referencedColumnName = "FK_ROLE_USERS")
+    @ManyToOne
+    @JoinColumn(name = "SQ_ROLE_ID",  insertable = false, updatable = false)
     private Role role;
 }

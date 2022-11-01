@@ -11,11 +11,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -43,18 +41,16 @@ public class JwtUserDetailsService implements UserDetailsService {
         }
 
         User user = userOpt.get();
-        System.out.println("Iniciando Verificação de Password");
         boolean verifiedPassword = passwordEncoder.matches(password, user.getPassword());
-        System.out.println("Terminando Verificação de Password");
         if (user.getUsername().equals(username) && verifiedPassword) {
 
             List<UserRole> roleUsers = userRoleRepository.findUserRolesByUserId(user.getUserId());
             List<SimpleGrantedAuthority> roles = new ArrayList<>();
 
             if(!roleUsers.isEmpty()){
-//                roles = roleUsers.stream()
-//                        .map(userRoles -> new SimpleGrantedAuthority(userRoles.getRole().getName()))
-//                        .collect(Collectors.toList());
+                roles = roleUsers.stream()
+                        .map(userRoles -> new SimpleGrantedAuthority(userRoles.getRole().getName()))
+                        .collect(Collectors.toList());
             }
 
 

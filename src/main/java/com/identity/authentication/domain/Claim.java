@@ -28,6 +28,6 @@ public class Claim implements Serializable {
     @OneToMany(mappedBy="claim",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<UserClaim> userClaims;
 
-    @OneToMany(mappedBy="role",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="claim",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<RoleClaim> roleClaims;
 }

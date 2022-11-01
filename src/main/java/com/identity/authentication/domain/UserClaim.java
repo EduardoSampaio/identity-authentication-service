@@ -25,12 +25,10 @@ public class UserClaim implements Serializable {
     private Long claimId;
 
     @ManyToOne
-    @MapsId("userId")
-    @JoinColumn(name = "FK_USERS_CLAIMS")
+    @JoinColumn(name = "SQ_USER_ID", insertable = false, updatable = false)
     private User user;
 
     @ManyToOne
-    @MapsId("claimId")
-    @JoinColumn(name = "FK_CLAIMS_USERS")
+    @JoinColumn(name = "SQ_CLAIM_ID", insertable = false, updatable = false)
     private Claim claim;
 }
